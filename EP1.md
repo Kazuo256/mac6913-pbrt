@@ -17,33 +17,36 @@ memória, uma gramática tem:
 - Um alfabeto - são os símbolos com que ela trabalha
 - Um conjunto de símbolos terminais - parte do alfabeto que "não expande"
 - Um conjunto de regras - especificam como os símbolos expandem, exemplos:
+
   A -> BB ('A' expande em dois 'B's)
+
   A -> A+A ('A' expande recursivamente)
 - Um símbolo inicial - as expansões começam daqui
 
 Exemplo de gramática:
-  alfabeto = { A, B, C }
-  símbolos terminais = { C }
-  regras = { A -> BB, B -> CAC }
-  símbolo inicial = A
+
+  - alfabeto = { A, B, C }
+  - símbolos terminais = { C }
+  - regras = { A -> BB, B -> CAC }
+  - símbolo inicial = A
 
 Expandindo ela, temos:
-  1) A
-  2) BB
-  3) CACCAC
-  4) CBBCCBBC
-  5) CCACCACCCCACCACC
-  6) etc
+  1. A
+  2. BB
+  3. CACCAC
+  4. CBBCCBBC
+  5. CCACCACCCCACCACC
+  6. etc
 
 Para fazer L-Systems, usamos alguns símbolos com significados especiais, bem
 parecido com aqueles programas "LOGO" no qual damos comandos a uma tartaruga
 para desenhar formas geométricas.
 
-F: translate forward
--: rotate left
-+: rotate right
-[: push transformation
-]: pop transformation
+* F: translate forward
+* -: rotate left
+* +: rotate right
+* [: push transformation
+* ]: pop transformation
 
 Assim, se F traslada 10 unidade, + gira 90 graus, a sequência F+F+F+F faz um
 quadrado.
