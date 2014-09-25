@@ -1,13 +1,23 @@
 
 // shapes/lsystem.cpp
 #include "shapes/lsystem.h"
+#include "shapes/sphere.h"
 #include "paramset.h"
 
 #include <numeric>
 
 LSystem::LSystem(const Transform *o2w, const Transform *w2o, bool ro,
                  const string &description) : Shape(o2w, w2o, ro) {
-
+    for (char c : description) {
+        ParamSet params;
+        switch(c) {
+            case 's': {
+                terminals.push_back(CreateSphereShape(o2w, w2o, ro, params));
+                break;
+            }
+            default: {}
+        }
+    }
 }
 
 BBox LSystem::ObjectBound() const {
@@ -28,6 +38,6 @@ void LSystem::Refine(vector<Reference<Shape>> &refined) const {
 
 LSystem *CreateLSystemShape(const Transform *o2w, const Transform *w2o,
                             bool reverseOrientation, const ParamSet &params) {
-    return nullptr;
+    return new LSystem(o2w, w2o, reverseOrientation, "s");
 }
 

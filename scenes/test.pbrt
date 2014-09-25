@@ -59,7 +59,7 @@ ObjectBegin "grayball"
     "color Ks" [.3 .3 .3]
     "color Kd" [.4 .5 .4]
     "float roughness" [.15] 
-  Shape "sphere"
+  Shape "lsystem"
     "float radius" [50]
 ObjectEnd
 
