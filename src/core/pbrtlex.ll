@@ -135,6 +135,7 @@ Identity                { return IDENTITY; }
 Include                 { return INCLUDE; }
 LightSource             { return LIGHTSOURCE; }
 LookAt                  { return LOOKAT; }
+LSystem                 { return LSYSTEM; }
 MakeNamedMaterial       { return MAKENAMEDMATERIAL; }
 Material                { return MATERIAL; }
 NamedMaterial           { return NAMEDMATERIAL; }

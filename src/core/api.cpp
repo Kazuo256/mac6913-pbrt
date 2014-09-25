@@ -1062,6 +1062,10 @@ void pbrtShape(const string &name, const ParamSet &params) {
     }
 }
 
+void pbrtLSystem() {
+    printf("huh\n");
+}
+
 
 Reference<Material> GraphicsState::CreateMaterial(const ParamSet &params) {
     TextureParams mp(params, materialParams,

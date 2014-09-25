@@ -61,6 +61,8 @@ ObjectBegin "grayball"
     "float roughness" [.15] 
   Shape "lsystem"
     "string axiom" "s"
+  LSystem
+    "string axiom" "s"
 ObjectEnd
 
 AttributeBegin
