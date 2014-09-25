@@ -50,7 +50,6 @@ ObjectBegin "redball"
     "color Kd" [.4 .2 .2]
     "color Ks" [.5 .5 .5]
     "float roughness" [.025]
-  Translate 100 200 -140
   Shape "sphere"
     "float radius" [50]
 ObjectEnd
