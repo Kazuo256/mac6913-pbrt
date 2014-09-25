@@ -18,13 +18,13 @@ HAVE_DTRACE=0
 DEFS=-DPBRT_HAS_OPENEXR
 
 # 32 bit
-#MARCH=-m32 -msse2 -mfpmath=sse
+MARCH=-m32 -msse2 -mfpmath=sse
 
 # 64 bit
-MARCH=-m64
+#MARCH=-m64
 
 # change this to -g3 for debug builds
-OPT=-O2
+OPT=-O2 -std=c++11
 # comment out this line to enable assertions at runtime
 DEFS += -DNDEBUG
 
