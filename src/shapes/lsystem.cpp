@@ -12,6 +12,8 @@ LSystem::LSystem(const Transform *o2w, const Transform *w2o, bool ro,
         ParamSet params;
         switch(c) {
             case 's': {
+                float radius = 50.0f;
+                params.AddFloat("radius", &radius);
                 terminals.push_back(CreateSphereShape(o2w, w2o, ro, params));
                 break;
             }
@@ -38,6 +40,7 @@ void LSystem::Refine(vector<Reference<Shape>> &refined) const {
 
 LSystem *CreateLSystemShape(const Transform *o2w, const Transform *w2o,
                             bool reverseOrientation, const ParamSet &params) {
-    return new LSystem(o2w, w2o, reverseOrientation, "s");
+    string axiom = params.FindOneString("axiom", "");
+    return new LSystem(o2w, w2o, reverseOrientation, axiom);
 }
 

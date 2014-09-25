@@ -60,7 +60,7 @@ ObjectBegin "grayball"
     "color Kd" [.4 .5 .4]
     "float roughness" [.15] 
   Shape "lsystem"
-    "float radius" [50]
+    "string axiom" "s"
 ObjectEnd
 
 AttributeBegin
