@@ -47,21 +47,11 @@ AttributeEnd
 
 ObjectBegin "ball"
   Material "plastic"
-    "color Kd" [.4 .2 .2]
-    "color Ks" [.5 .5 .5]
-    "float roughness" [.025]
+    "color Kd" [.2 .6 .4]
+    "color Ks" [.4 .4 .4]
+    "float roughness" [.3]
   Shape "sphere"
-    "float radius" [1.0]
-ObjectEnd
-
-ObjectBegin "branch"
-  Material "plastic"
-    "color Ks" [.3 .3 .3]
-    "color Kd" [.4 .5 .4]
-    "float roughness" [.15] 
-  Shape "cone"
-    "float radius" [4.0]
-    "float height" [15.0]
+    "float radius" [12.0]
 ObjectEnd
 
 ObjectBegin "trunk"
@@ -71,29 +61,30 @@ ObjectBegin "trunk"
     "float roughness" [.15] 
   Shape "cylinder"
     "float radius" [4.0]
-    "float zmin" [-1.0]
-    "float zmax" [11.0]
+    "float zmin" [-10.0]
+    "float zmax" [10.0]
 ObjectEnd
 
 AttributeBegin
   Scale .5 .5 .5
   Rotate -60 0 0 1
-  Translate -100 0 -300
+  Translate 0 350 -300
+  Scale .6 .6 .6
   LSystem
     "string instances" [
       "t" "trunk"
-      "b" "branch"
       "." "ball"
     ]
     "string rules" [
-      "A" "tBFA"
-      "B" "[+AbF.][-AbF.]"
-      "t" "tFt"
+      "S" "A."
+      "A" "tCBA"
+      "B" "[<&FS][>&FS][>>>&FS]"
+      "C" "CFFt"
     ]
-    "string axiom"  "Ab."
+    "string axiom"  "S"
     "float forward" [10.0]
-    "float delta"   [75.0]
-    "integer steps" [4]
+    "float delta"   [60.0]
+    "integer steps" [10]
 AttributeEnd
 
 WorldEnd

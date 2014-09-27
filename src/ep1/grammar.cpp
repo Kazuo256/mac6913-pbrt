@@ -56,6 +56,22 @@ void Grammar::Expand(const string &axiom, size_t steps) const {
                 pbrtRotate(-delta, 0.0f, 1.0f, 0.0f);
                 break;
             }
+            case '^': {
+                pbrtRotate(delta, 1.0f, 0.0f, 0.0f);
+                break;
+            }
+            case '&': {
+                pbrtRotate(-delta, 1.0f, 0.0f, 0.0f);
+                break;
+            }
+            case '>': {
+                pbrtRotate(delta, 0.0f, 0.0f, 1.0f);
+                break;
+            }
+            case '<': {
+                pbrtRotate(-delta, 0.0f, 0.0f, 1.0f);
+                break;
+            }
             case '[': {
                 pbrtTransformBegin();
                 ++transforms;
