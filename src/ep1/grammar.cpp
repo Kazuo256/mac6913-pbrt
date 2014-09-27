@@ -5,35 +5,49 @@
 #include "core/paramset.h"
 #include "core/api.h"
 
-void Grammar::AddTerminal(char token, const string &instanceName) {
-    terminals[token] = instanceName;
+void Grammar::AddInstance(char token, const string &instanceName) {
+    printf("Adding instance '%c'\n", token);
+    instances[token] = instanceName;
 }
 
-void Grammar::SetForwad(float f) {
+void Grammar::AddRule(char token, const string &result) {
+    printf("Adding rule '%c' -> '%s'\n", token, result.c_str()),
+    rules[token] = result;
+}
+
+void Grammar::SetForward(float f) {
     forward = f;
 }
 
+void Grammar::SetDelta(float d) {
+    delta = d;
+}
+
 void Grammar::Expand(const string &axiom, size_t steps) const {
-    for (char c : axiom) {
+    string description = axiom;
+    for (size_t i = 0; i < steps; ++i) {
+        string derivate = "";
+        for (char token : description) {
+            const auto &check = rules.find(token);
+            if (check != rules.end())
+                derivate += check->second;
+            else
+                derivate += token;
+        }
+        description = derivate;
+    }
+    printf("Final description: %s\n", description.c_str());
+    for (char token : description) {
         ParamSet params;
-        switch(c) {
-            case '.': {
-                float radius = 50.0f;
-                params.AddFloat("radius", &radius);
-                pbrtShape("sphere", params);
-                break;
-            }
+        switch(token) {
             case 'F': {
                 pbrtTranslate(0.0f, 0.0f, forward);
                 break;
             }
             default: {
-                const auto &check = terminals.find(c);
-                if (check != terminals.end()) {
+                const auto &check = instances.find(token);
+                if (check != instances.end())
                     pbrtObjectInstance(check->second);
-                } else {
-                    Warning("Unknown token");
-                }
             }
         }
     }

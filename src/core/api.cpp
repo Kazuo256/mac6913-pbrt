@@ -1065,17 +1065,31 @@ void pbrtShape(const string &name, const ParamSet &params) {
 
 void pbrtLSystem(const ParamSet &params) {
     Grammar grammar;
-    /* get terminals */ {
+    /* get instances */ {
         int n;
-        const string *terminals = params.FindString("terminals", &n);
+        const string *instances = params.FindString("instances", &n);
         if (n & 1)
-            Warning("Terminal ignored");
-        for (int i = 0; i < n/2; i += 2)
-            grammar.AddTerminal(terminals[i][0], terminals[i+1]);
+            Warning("Incomplete instance ignored");
+        for (int i = 0; i < n; i += 2)
+            grammar.AddInstance(instances[i][0], instances[i+1]);
+    }
+    /* get rules */ {
+        int n;
+        const string *rules = params.FindString("rules", &n);
+        if (n & 1)
+            Warning("Incomplete rule ignored");
+        for (int i = 0; i < n; i += 2)
+            grammar.AddRule(rules[i][0], rules[i+1]);
+    }
+    /* other parameters */ {
+        float forward = params.FindOneFloat("forward", 1.0);
+        float delta = params.FindOneFloat("delta", 15.0);
+        grammar.SetForward(forward);
+        grammar.SetDelta(delta);
     }
     string axiom = params.FindOneString("axiom", "");
-    printf("%s\n", axiom.c_str());
-    grammar.Expand(axiom, 0u);
+    int steps = params.FindOneInt("steps", 1);
+    grammar.Expand(axiom, steps);
 }
 
 

@@ -59,8 +59,8 @@ ObjectBegin "grayball"
     "color Ks" [.3 .3 .3]
     "color Kd" [.4 .5 .4]
     "float roughness" [.15] 
-  Shape "lsystem"
-    "string axiom" "s"
+  Shape "sphere"
+    "float radius" [10]
 ObjectEnd
 
 AttributeBegin
@@ -68,8 +68,15 @@ AttributeBegin
   Rotate -60 0 0 1
   Translate 100 200 -140
   LSystem
-    "string axiom" "rFrFr"
-    "string terminals" ["r" "redball" "g" "grayball"]
+    "string instances" [
+      "r" "redball"
+      "g" "grayball"
+    ]
+    "string rules"  ["A" "rFgFA"]
+    "string axiom"  "A"
+    "float forward" [25.0]
+    "float delta"   [30.0]
+    "integer steps" [3]
 # ObjectInstance "redball"
   Translate -200 0 0
   ObjectInstance "grayball"

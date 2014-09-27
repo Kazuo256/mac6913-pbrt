@@ -14,12 +14,16 @@ class Grammar final {
 public:
     using RuleSet = std::map<char, string>;
     Grammar() : forward(10.0f) {}
-    void AddTerminal(char token, const string &instanceName);
-    void SetForwad(float f);
+    void AddInstance(char token, const string &instanceName);
+    void AddRule(char token, const string &result);
+    void SetForward(float f);
+    void SetDelta(float d);
     void Expand(const string &axiom, size_t steps) const;
 private:
-    RuleSet terminals;
+    RuleSet instances;
+    RuleSet rules;
     float   forward;
+    float   delta;
 };
 
 #endif // PBRT_EP1_GRAMMAR_H
