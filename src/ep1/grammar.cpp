@@ -5,13 +5,15 @@
 #include "core/paramset.h"
 #include "core/api.h"
 
+using std::to_string;
+
 void Grammar::AddInstance(char token, const string &instanceName) {
-    printf("Adding instance '%c'\n", token);
+    Info("Adding instance '%c'\n", token);
     instances[token] = instanceName;
 }
 
 void Grammar::AddRule(char token, const string &result) {
-    printf("Adding rule '%c' -> '%s'\n", token, result.c_str()),
+    Info("Adding rule '%c' -> '%s'\n", token, result.c_str()),
     rules[token] = result;
 }
 
@@ -36,12 +38,34 @@ void Grammar::Expand(const string &axiom, size_t steps) const {
         }
         description = derivate;
     }
-    printf("Final description: %s\n", description.c_str());
+    Info("Final description: %s\n", description.c_str());
+    pbrtTransformBegin();
+    size_t transforms = 0;
     for (char token : description) {
         ParamSet params;
         switch(token) {
             case 'F': {
                 pbrtTranslate(0.0f, 0.0f, forward);
+                break;
+            }
+            case '+': {
+                pbrtRotate(delta, 0.0f, 1.0f, 0.0f);
+                break;
+            }
+            case '-': {
+                pbrtRotate(-delta, 0.0f, 1.0f, 0.0f);
+                break;
+            }
+            case '[': {
+                pbrtTransformBegin();
+                ++transforms;
+                break;
+            }
+            case ']': {
+                if (transforms > 0) {
+                  pbrtTransformEnd();
+                  --transforms;
+                } else Warning("Finishing inexistant transform");
                 break;
             }
             default: {
@@ -51,5 +75,10 @@ void Grammar::Expand(const string &axiom, size_t steps) const {
             }
         }
     }
+    if (transforms > 0)
+        Warning("%d unclosed transformations left", transforms);
+    for (size_t i = 0; i < transforms; ++i)
+        pbrtTransformEnd();
+    pbrtTransformEnd();
 }
 

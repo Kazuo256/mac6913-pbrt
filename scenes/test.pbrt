@@ -45,41 +45,55 @@ AttributeBegin
     "integer indices" [ 0 1 2 2 3 0]
 AttributeEnd
 
-ObjectBegin "redball"
+ObjectBegin "ball"
   Material "plastic"
     "color Kd" [.4 .2 .2]
     "color Ks" [.5 .5 .5]
     "float roughness" [.025]
   Shape "sphere"
-    "float radius" [10]
+    "float radius" [1.0]
 ObjectEnd
 
-ObjectBegin "grayball"
+ObjectBegin "branch"
   Material "plastic"
     "color Ks" [.3 .3 .3]
     "color Kd" [.4 .5 .4]
     "float roughness" [.15] 
-  Shape "sphere"
-    "float radius" [10]
+  Shape "cone"
+    "float radius" [4.0]
+    "float height" [15.0]
+ObjectEnd
+
+ObjectBegin "trunk"
+  Material "plastic"
+    "color Ks" [.3 .3 .3]
+    "color Kd" [.4 .5 .4]
+    "float roughness" [.15] 
+  Shape "cylinder"
+    "float radius" [4.0]
+    "float zmin" [-1.0]
+    "float zmax" [11.0]
 ObjectEnd
 
 AttributeBegin
   Scale .5 .5 .5
   Rotate -60 0 0 1
-  Translate 100 200 -140
+  Translate -100 0 -300
   LSystem
     "string instances" [
-      "r" "redball"
-      "g" "grayball"
+      "t" "trunk"
+      "b" "branch"
+      "." "ball"
     ]
-    "string rules"  ["A" "rFgFA"]
-    "string axiom"  "A"
-    "float forward" [25.0]
-    "float delta"   [30.0]
-    "integer steps" [3]
-# ObjectInstance "redball"
-  Translate -200 0 0
-  ObjectInstance "grayball"
+    "string rules" [
+      "A" "tBFA"
+      "B" "[+AbF.][-AbF.]"
+      "t" "tFt"
+    ]
+    "string axiom"  "Ab."
+    "float forward" [10.0]
+    "float delta"   [75.0]
+    "integer steps" [4]
 AttributeEnd
 
 WorldEnd
