@@ -649,8 +649,8 @@ static const yytype_uint16 yyrline[] =
      304,   310,   323,   329,   334,   342,   347,   353,   362,   368,
      374,   380,   389,   395,   401,   410,   418,   424,   430,   439,
      445,   451,   460,   466,   475,   484,   490,   496,   502,   508,
-     517,   526,   532,   538,   547,   553,   561,   566,   575,   584,
-     590,   596,   602,   610,   616,   625,   634,   640
+     517,   526,   532,   538,   547,   553,   561,   569,   578,   587,
+     593,   599,   605,   613,   619,   628,   637,   643
 };
 #endif
 
@@ -2099,13 +2099,16 @@ yyreduce:
 /* Line 1787 of yacc.c  */
 #line 562 "core/pbrtparse.yy"
     {
-    pbrtLSystem(); 
+    ParamSet params;
+    InitParamSet(params, SPECTRUM_REFLECTANCE);
+    pbrtLSystem(params); 
+    FreeArgs();
 }
     break;
 
   case 57:
 /* Line 1787 of yacc.c  */
-#line 567 "core/pbrtparse.yy"
+#line 570 "core/pbrtparse.yy"
     {
     ParamSet params;
     InitParamSet(params, SPECTRUM_REFLECTANCE);
@@ -2116,7 +2119,7 @@ yyreduce:
 
   case 58:
 /* Line 1787 of yacc.c  */
-#line 576 "core/pbrtparse.yy"
+#line 579 "core/pbrtparse.yy"
     {
     ParamSet params;
     InitParamSet(params, SPECTRUM_REFLECTANCE);
@@ -2127,7 +2130,7 @@ yyreduce:
 
   case 59:
 /* Line 1787 of yacc.c  */
-#line 585 "core/pbrtparse.yy"
+#line 588 "core/pbrtparse.yy"
     {
     pbrtTransformBegin();
 }
@@ -2135,7 +2138,7 @@ yyreduce:
 
   case 60:
 /* Line 1787 of yacc.c  */
-#line 591 "core/pbrtparse.yy"
+#line 594 "core/pbrtparse.yy"
     {
     pbrtTransformEnd();
 }
@@ -2143,7 +2146,7 @@ yyreduce:
 
   case 61:
 /* Line 1787 of yacc.c  */
-#line 597 "core/pbrtparse.yy"
+#line 600 "core/pbrtparse.yy"
     {
     pbrtTransformTimes((yyvsp[(2) - (3)].num), (yyvsp[(3) - (3)].num));
 }
@@ -2151,7 +2154,7 @@ yyreduce:
 
   case 62:
 /* Line 1787 of yacc.c  */
-#line 603 "core/pbrtparse.yy"
+#line 606 "core/pbrtparse.yy"
     {
     if (VerifyArrayLength( (yyvsp[(2) - (2)].ribarray), 16, "Transform" ))
         pbrtTransform( (float *) (yyvsp[(2) - (2)].ribarray)->array );
@@ -2161,7 +2164,7 @@ yyreduce:
 
   case 63:
 /* Line 1787 of yacc.c  */
-#line 611 "core/pbrtparse.yy"
+#line 614 "core/pbrtparse.yy"
     {
     pbrtTranslate((yyvsp[(2) - (4)].num), (yyvsp[(3) - (4)].num), (yyvsp[(4) - (4)].num));
 }
@@ -2169,7 +2172,7 @@ yyreduce:
 
   case 64:
 /* Line 1787 of yacc.c  */
-#line 617 "core/pbrtparse.yy"
+#line 620 "core/pbrtparse.yy"
     {
     ParamSet params;
     InitParamSet(params, SPECTRUM_REFLECTANCE);
@@ -2180,7 +2183,7 @@ yyreduce:
 
   case 65:
 /* Line 1787 of yacc.c  */
-#line 626 "core/pbrtparse.yy"
+#line 629 "core/pbrtparse.yy"
     {
     ParamSet params;
     InitParamSet(params, SPECTRUM_REFLECTANCE);
@@ -2191,7 +2194,7 @@ yyreduce:
 
   case 66:
 /* Line 1787 of yacc.c  */
-#line 635 "core/pbrtparse.yy"
+#line 638 "core/pbrtparse.yy"
     {
     pbrtWorldBegin();
 }
@@ -2199,7 +2202,7 @@ yyreduce:
 
   case 67:
 /* Line 1787 of yacc.c  */
-#line 641 "core/pbrtparse.yy"
+#line 644 "core/pbrtparse.yy"
     {
     pbrtWorldEnd();
 }
@@ -2207,7 +2210,7 @@ yyreduce:
 
 
 /* Line 1787 of yacc.c  */
-#line 2211 "core/pbrtparse.cpp"
+#line 2214 "core/pbrtparse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2439,7 +2442,7 @@ yyreturn:
 
 
 /* Line 2050 of yacc.c  */
-#line 646 "core/pbrtparse.yy"
+#line 649 "core/pbrtparse.yy"
 
 static const char *paramTypeToName(int type) {
     switch (type) {

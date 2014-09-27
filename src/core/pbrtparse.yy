@@ -560,7 +560,10 @@ pbrt_stmt: ACCELERATOR STRING paramlist
 
 | LSYSTEM paramlist
 {
-    pbrtLSystem(); 
+    ParamSet params;
+    InitParamSet(params, SPECTRUM_REFLECTANCE);
+    pbrtLSystem(params); 
+    FreeArgs();
 }
 
 | SURFACEINTEGRATOR STRING paramlist

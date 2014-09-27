@@ -74,6 +74,7 @@ LIB_CXXSRCS  = $(wildcard core/*.cpp) core/pbrtlex.cpp core/pbrtparse.cpp
 LIB_CXXSRCS += $(wildcard accelerators/*.cpp cameras/*.cpp film/*.cpp filters/*.cpp )
 LIB_CXXSRCS += $(wildcard integrators/*.cpp lights/*.cpp materials/*.cpp renderers/*.cpp )
 LIB_CXXSRCS += $(wildcard samplers/*.cpp shapes/*.cpp textures/*.cpp volumes/*.cpp)
+LIB_CXXSRCS += $(wildcard ep1/*.cpp)
 
 LIBOBJS  = $(addprefix objs/, $(subst /,_,$(LIB_CSRCS:.c=.o)))
 LIBOBJS += $(addprefix objs/, $(subst /,_,$(LIB_CXXSRCS:.cpp=.o)))
@@ -160,6 +161,10 @@ objs/textures_%.o: textures/%.cpp
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 objs/volumes_%.o: volumes/%.cpp
+	@echo "Building object $@"
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+
+objs/ep1_%.o: ep1/%.cpp
 	@echo "Building object $@"
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 

@@ -49,6 +49,7 @@
 #include "cameras/environment.h"
 #include "cameras/orthographic.h"
 #include "cameras/perspective.h"
+#include "ep1/grammar.h"
 #include "film/image.h"
 #include "filters/box.h"
 #include "filters/gaussian.h"
@@ -1062,8 +1063,19 @@ void pbrtShape(const string &name, const ParamSet &params) {
     }
 }
 
-void pbrtLSystem() {
-    printf("huh\n");
+void pbrtLSystem(const ParamSet &params) {
+    Grammar grammar;
+    /* get terminals */ {
+        int n;
+        const string *terminals = params.FindString("terminals", &n);
+        if (n & 1)
+            Warning("Terminal ignored");
+        for (int i = 0; i < n/2; i += 2)
+            grammar.AddTerminal(terminals[i][0], terminals[i+1]);
+    }
+    string axiom = params.FindOneString("axiom", "");
+    printf("%s\n", axiom.c_str());
+    grammar.Expand(axiom, 0u);
 }
 
 
