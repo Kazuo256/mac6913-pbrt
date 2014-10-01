@@ -49,6 +49,7 @@
 #include "cameras/environment.h"
 #include "cameras/orthographic.h"
 #include "cameras/perspective.h"
+#include "ep1/grammar.h"
 #include "film/image.h"
 #include "filters/box.h"
 #include "filters/gaussian.h"
@@ -1060,6 +1061,35 @@ void pbrtShape(const string &name, const ParamSet &params) {
             renderOptions->lights.push_back(area);
         }
     }
+}
+
+void pbrtLSystem(const ParamSet &params) {
+    Grammar grammar;
+    /* get instances */ {
+        int n;
+        const string *instances = params.FindString("instances", &n);
+        if (n & 1)
+            Warning("Incomplete instance ignored");
+        for (int i = 0; i < n; i += 2)
+            grammar.AddInstance(instances[i][0], instances[i+1]);
+    }
+    /* get rules */ {
+        int n;
+        const string *rules = params.FindString("rules", &n);
+        if (n & 1)
+            Warning("Incomplete rule ignored");
+        for (int i = 0; i < n; i += 2)
+            grammar.AddRule(rules[i][0], rules[i+1]);
+    }
+    /* other parameters */ {
+        float forward = params.FindOneFloat("forward", 1.0);
+        float delta = params.FindOneFloat("delta", 15.0);
+        grammar.SetForward(forward);
+        grammar.SetDelta(delta);
+    }
+    string axiom = params.FindOneString("axiom", "");
+    int steps = params.FindOneInt("steps", 1);
+    grammar.Expand(axiom, steps);
 }
 
 

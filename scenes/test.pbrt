@@ -45,31 +45,46 @@ AttributeBegin
     "integer indices" [ 0 1 2 2 3 0]
 AttributeEnd
 
-ObjectBegin "redball"
+ObjectBegin "ball"
   Material "plastic"
-    "color Kd" [.4 .2 .2]
-    "color Ks" [.5 .5 .5]
-    "float roughness" [.025]
+    "color Kd" [.2 .6 .4]
+    "color Ks" [.4 .4 .4]
+    "float roughness" [.3]
   Shape "sphere"
-    "float radius" [50]
+    "float radius" [12.0]
 ObjectEnd
 
-ObjectBegin "grayball"
+ObjectBegin "trunk"
   Material "plastic"
     "color Ks" [.3 .3 .3]
     "color Kd" [.4 .5 .4]
     "float roughness" [.15] 
-  Shape "lsystem"
-    "string axiom" "s"
+  Shape "cylinder"
+    "float radius" [4.0]
+    "float zmin" [-10.0]
+    "float zmax" [10.0]
 ObjectEnd
 
 AttributeBegin
   Scale .5 .5 .5
   Rotate -60 0 0 1
-  Translate 100 200 -140
-  ObjectInstance "redball"
-  Translate -200 0 0
-  ObjectInstance "grayball"
+  Translate 0 350 -300
+  Scale .6 .6 .6
+  LSystem
+    "string instances" [
+      "t" "trunk"
+      "." "ball"
+    ]
+    "string rules" [
+      "S" "A."
+      "A" "tCBA"
+      "B" "[<&FS][>&FS][>>>&FS]"
+      "C" "CFFt"
+    ]
+    "string axiom"  "S"
+    "float forward" [10.0]
+    "float delta"   [60.0]
+    "integer steps" [10]
 AttributeEnd
 
 WorldEnd
