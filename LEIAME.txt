@@ -1,0 +1,25 @@
+
+MAC6913 - Tópicos em Computação Gráfica
+=======================================
+
+Primeiro EP: L-Systems
+----------------------
+
+Alunos:                   Número USP:
+  Fernando Omar Aluani      6797226
+  Wilson Kazuo Mizutani     6797230
+
+I. Arquivos entregues
+
+II. Guia de uso
+
+III. Detalhes de implementação
+
+IV. Desempenho
+
+  Cena: scenes/balltree.pbrt
+  CPU: Intel Core i5
+  #Cores: 4
+  SO: Linux Mint 16 (32-bit)
+  Tempo de renderização 273.9s
+
