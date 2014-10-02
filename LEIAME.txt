@@ -11,6 +11,50 @@ Alunos:                   Número USP:
 
 I. Arquivos entregues
 
+  Mostramos aqui os arquivos que devem constar na nossa entrega. Como
+  especificado, estamos apenas enviando os arquivos que foram criados ou
+  modificados com relação à implementação original do pbrt. Para isso, fizemos
+  um fork (privado) do repositório do sistema, e criamos uma branch para o EP.
+  Usando a ferramenta de controle de versão Git pudemos identificar exatamente
+  quais arquivos foram modificados com relação ao repositório inicial:.
+
+  /LEIAME.txt
+
+    Este arquivo.
+
+  /scenes/balltree.pbrt
+
+    Uma cena de exemplo usando o L-System. Mais sobre o uso dele será tratado
+    na seção II.
+
+  /src/Makefile
+
+    Modificamos o Makefile para:
+      - Habilitar a compilação com C++11 (gcc >= 4.8)
+      - Compilar em arquitetura 32-bits (pode ser mudado à vontade)
+      - Adicionar na compilação os arquivos novos que introduzimos
+
+  /src/core/api.cpp
+  /src/core/api.h
+
+    Modificamos esses arquivos para introduzir a rotina de construção de
+    L-System na API do pbrt.
+
+  /src/core/pbrtlex.ll
+  /src/core/pbrtparse.yy
+
+    Modificamos esses arquivos para reconhecer o comando "LSystem" em arquivos
+    de descrição de cenas do pbrt. Indiretamente, isso também altera os
+    arquivos pbrtlex.cpp, pbrtparse.hh e pbrtparse.cpp (em /src/core), pois
+    eles são gerados usando Flex/Bison. Então não há necessidade de os
+    incluirmos.
+
+  /src/ep1/grammar.cpp
+  /src/ep1/grammar.h
+
+    Esses são os arquivos que acrescentamos ao pbrt. Colocamos eles em uma
+    pasta separada do resto para ficar mais fácil de identificá-los.
+
 II. Guia de uso
 
 III. Detalhes de implementação
