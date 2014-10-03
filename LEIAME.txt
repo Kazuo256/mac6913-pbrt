@@ -57,6 +57,74 @@ I. Arquivos entregues
 
 II. Guia de uso
 
+  O comando "LSystem" que fizemos se aproveita do mecanismos de instâncias do
+  pbrt. É possível usar qualquer tipo de forma, contanto que ela tenha sido
+  determinada em alguma instância. A assinatura do comando é a seguinte:
+
+    LSystem PARAMS
+
+  Onde PARAMS segue o padrão de parâmetros do formato pbrt. Diferentemente do
+  comando "Shape", o comando "LSystem" não recebe um nome. Os parâmetros
+  servem para especificar a gramática usada, a quantidade de passos de
+  expansão, e as instâncias a serem possivelmente renderizadas. A cadeia de
+  caracteres resultante pode conter qualquer caracter ASCII, com alguns deles
+  possuindo significados especiais:
+
+    'F': deslocamento para frente
+    '+': rotação em torno do eixo Y no sentido positivo
+    '-': rotação em torno do eixo Y no sentido negatico
+    '^': rotação em torno do eixo X no sentido positivo
+    '&': rotação em torno do eixo X no sentido negativo
+    '>': rotação em torno do eixo Z no sentido positivo
+    '<': rotação em torno do eixo Z no sentido negativo
+    '[': empilha uma cópia da transformação atual
+    ']': desempilha a transformação atual
+
+  A ideia era seguir o padrão apresentado nos slides da aula, mas algumas
+  adaptações foram necessárias. A mais gritante é o uso dos caracteres '>' e
+  '<' ao invés de '/' e '\'. O motivo para isso é que o caracter '\' não
+  conseguia ser devidamente lido pelo analisador léxico do pbrt (provavelmente
+  porque ele já é usado como caracter de escape). A outra diferença (mais
+  sutil) é que os operadores '[' e ']' tomam cuidado com o tamanho atual da
+  pilha de transformações. Por exemplo, eles não deixam desempilhar
+  transformações quando não há nenhuma na pilha.
+
+  A seguir são descritos os parâmetros que o comando "LSystem" aceita no
+  formato do pbrt.
+
+    "string rules":
+      Uma sequência de pares de cadeias de caracteres. Cada par contém uma
+      cadeia com apenas um caracter e outra com a expansão dele, nessa ordem.
+      Por exemplo, o par "A" "ABA" especifica a regra de expansão do caracter
+      'A' para a cadeia "ABA" (no caso, recursiva). O sistema não lida com
+      múltiplas regras para um mesmo caracter (ele vai usar apenas a última
+      que ele reconhecer).
+
+    "string axiom":
+      O axioma usado, ou seja, a cadeia inicial. Pode conter mais de um
+      caracter.
+
+    "integer steps":
+      Um número inteiro representando a quantidade de passos de expansão que
+      devem ser feitos com a gramática.
+
+    "string instances" (opcional):
+      Uma sequência de pares de cadeias de caracteres. Cada par associa um
+      caracter ao nome de uma instância previamente declarada, nessa ordem. É
+      isso que permite que o L-System de fato renderize algo. A cadeia final
+      gerada pela aplicação das regras é percorrida, e cada caracter com uma
+      instância associada evoca o equivalente ao comando "ObjectInstance"
+      passando o nome apropriado. Caracteres sem instância associada são
+      ignorados, exceto pelos caracteres especiais de transformações.
+
+    "float forward" (opcional, valor padrão = 10):
+      Um número de ponto flutuante representando o deslocamento espacial usado
+      na interpretaçao do caracter 'F'.
+
+    "float delta" (opcional, valor padrão = 30):
+      Um número de ponto flutuante representando o ângule em graus usado na
+      interpretaçao dos caracteres '+', '-', '^', '&', '>' e '<'.
+
 III. Detalhes de implementação
 
 IV. Desempenho
