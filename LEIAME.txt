@@ -92,7 +92,7 @@ II. Guia de uso
   A seguir são descritos os parâmetros que o comando "LSystem" aceita no
   formato do pbrt.
 
-    "string rules":
+    "string rules" (valor padrão = vazio):
       Uma sequência de pares de cadeias de caracteres. Cada par contém uma
       cadeia com apenas um caracter e outra com a expansão dele, nessa ordem.
       Por exemplo, o par "A" "ABA" especifica a regra de expansão do caracter
@@ -100,15 +100,15 @@ II. Guia de uso
       múltiplas regras para um mesmo caracter (ele vai usar apenas a última
       que ele reconhecer).
 
-    "string axiom":
+    "string axiom" (valor padrão = ""):
       O axioma usado, ou seja, a cadeia inicial. Pode conter mais de um
       caracter.
 
-    "integer steps":
+    "integer steps" (valor padrão = 1):
       Um número inteiro representando a quantidade de passos de expansão que
       devem ser feitos com a gramática.
 
-    "string instances" (opcional):
+    "string instances" (valor padrão = vazio):
       Uma sequência de pares de cadeias de caracteres. Cada par associa um
       caracter ao nome de uma instância previamente declarada, nessa ordem. É
       isso que permite que o L-System de fato renderize algo. A cadeia final
@@ -117,15 +117,39 @@ II. Guia de uso
       passando o nome apropriado. Caracteres sem instância associada são
       ignorados, exceto pelos caracteres especiais de transformações.
 
-    "float forward" (opcional, valor padrão = 10):
+    "float forward" (valor padrão = 1):
       Um número de ponto flutuante representando o deslocamento espacial usado
       na interpretaçao do caracter 'F'.
 
-    "float delta" (opcional, valor padrão = 30):
+    "float delta" (valor padrão = 15):
       Um número de ponto flutuante representando o ângule em graus usado na
       interpretaçao dos caracteres '+', '-', '^', '&', '>' e '<'.
 
 III. Detalhes de implementação
+
+  O comando "LSystem" direciona o fluxo de execução para a função
+  "pbrtLSystem()" nos arquivos core/api.h e core/api.cpp. Ela recebe os
+  parâmetros descritos no arquivo da cena e basicamente converte eles para
+  usar na classe "Grammar" definida em ep1/grammar.h e ep1/grammar.cpp. Ele
+  aplica os valores padrão dos argumentos quando estes não estiverem
+  presentes.
+
+  A classe "Grammar" é simples e direta. Ela tem dois métodos para adicionar
+  regras e instâncias, e dois métodos para definir o deslocamento e o ângulo
+  usados. O último método é o "Expand()", que recebe o axioma usado e o número
+  de passos desejado. Ele primeiro expande o axioma aplicando as regras, e
+  depois percorre a descrição gerada evocando as rotinas da API do pbrt
+  apropriadas. Por exemplo, o caracter 'F' evoca "pbrtTranslate()", enquanto
+  que caracteres associados a instâncias evocam "pbrtObjectInstance()"
+  passando o nome correspondente.
+
+  Ou seja, no fundo, o comando "LSystem" é uma macro elaborada de outros
+  comandos já presentes no formato pbrt. O único cuidado maior que tivemos que
+  tomar foi com os operadores '[' e ']', como explicado anteriormente. Além
+  disso, mesmo que eles não sejam usados, todas as operações realizadas dentro
+  do método "Expand()" usam uma transformação própria, de forma que não haja
+  interferência com os comandos que serão usados em seguida no arquivo de
+  descrição da cena (por exemplo, deslocando espacialmente tudo que vem depois).
 
 IV. Desempenho
 
