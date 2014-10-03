@@ -13,7 +13,7 @@
 class Grammar final {
 public:
     using RuleSet = std::map<char, string>;
-    Grammar() : forward(10.0f) {}
+    Grammar() : forward(10.0f), delta(30.0f) {}
     void AddInstance(char token, const string &instanceName);
     void AddRule(char token, const string &result);
     void SetForward(float f);
