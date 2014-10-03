@@ -57,9 +57,10 @@ I. Arquivos entregues
 
 II. Guia de uso
 
-  O comando "LSystem" que fizemos se aproveita do mecanismos de instâncias do
+  O comando "LSystem" que fizemos se aproveita do mecanismo de instâncias do
   pbrt. É possível usar qualquer tipo de forma, contanto que ela tenha sido
-  determinada em alguma instância. A assinatura do comando é a seguinte:
+  determinada em alguma instância. O arquivo "scenes/balltree.pbrt" ilustra o
+  uso do comando. Sua assinatura é a seguinte:
 
     LSystem PARAMS
 
@@ -67,8 +68,8 @@ II. Guia de uso
   comando "Shape", o comando "LSystem" não recebe um nome. Os parâmetros
   servem para especificar a gramática usada, a quantidade de passos de
   expansão, e as instâncias a serem possivelmente renderizadas. A cadeia de
-  caracteres resultante pode conter qualquer caracter ASCII, com alguns deles
-  possuindo significados especiais:
+  caracteres resultante das expansões pode conter qualquer caracter ASCII, com
+  alguns deles possuindo significados especiais:
 
     'F': deslocamento para frente
     '+': rotação em torno do eixo Y no sentido positivo
@@ -86,8 +87,8 @@ II. Guia de uso
   conseguia ser devidamente lido pelo analisador léxico do pbrt (provavelmente
   porque ele já é usado como caracter de escape). A outra diferença (mais
   sutil) é que os operadores '[' e ']' tomam cuidado com o tamanho atual da
-  pilha de transformações. Por exemplo, eles não deixam desempilhar
-  transformações quando não há nenhuma na pilha.
+  pilha de transformações. Por exemplo, eles não deixam desempilhar mais
+  transformações do que já foram empilhadas.
 
   A seguir são descritos os parâmetros que o comando "LSystem" aceita no
   formato do pbrt.
@@ -106,16 +107,17 @@ II. Guia de uso
 
     "integer steps" (valor padrão = 1):
       Um número inteiro representando a quantidade de passos de expansão que
-      devem ser feitos com a gramática.
+      devem ser feitos usando as regras da gramática.
 
     "string instances" (valor padrão = vazio):
       Uma sequência de pares de cadeias de caracteres. Cada par associa um
-      caracter ao nome de uma instância previamente declarada, nessa ordem. É
-      isso que permite que o L-System de fato renderize algo. A cadeia final
-      gerada pela aplicação das regras é percorrida, e cada caracter com uma
-      instância associada evoca o equivalente ao comando "ObjectInstance"
-      passando o nome apropriado. Caracteres sem instância associada são
-      ignorados, exceto pelos caracteres especiais de transformações.
+      caracter ao nome de uma instância previamente declarada, nessa ordem.
+      Por exemplo, "x" "MyInscante". É isso que permite que o L-System de fato
+      renderize algo. A cadeia final gerada pela aplicação das regras é
+      percorrida, e cada caracter com uma instância associada evoca o
+      equivalente ao comando "ObjectInstance" passando o nome apropriado.
+      Caracteres sem instância associada são ignorados, exceto pelos caracteres
+      especiais de transformações.
 
     "float forward" (valor padrão = 1):
       Um número de ponto flutuante representando o deslocamento espacial usado
