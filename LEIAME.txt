@@ -16,7 +16,7 @@ I. Arquivos entregues
   modificados com relação à implementação original do pbrt. Para isso, fizemos
   um fork (privado) do repositório do sistema, e criamos uma branch para o EP.
   Usando a ferramenta de controle de versão Git pudemos identificar exatamente
-  quais arquivos foram modificados com relação ao repositório inicial:.
+  quais arquivos foram modificados com relação ao repositório inicial:
 
   /LEIAME.txt
 
